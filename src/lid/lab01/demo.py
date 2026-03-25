@@ -1,65 +1,84 @@
 from model import Character
 
+
 def main():
+    print("*Создание объектов:")
+    p1, p2, p3 = create_character()
+    print("\n*Вывод repr:")
+    reprr(p3)
+    print("\n*Сравнение:")
+    test_eq(p1, p2, p3)
+    print(f"\n*Изменение состояния персонажа {p3.name}:")
+    change_available(p3)
+    print("\n*Изменение здоровья через setter:")
+    test_setter(p1)
+    print(f"\n*Бой между персонажами {p1.name} и {p3.name}\nданные\n{p1}\n{p3}:")
+    battle(p1, p3)
+    print("\n*Создание некорректного персонажа:")
+    bad_character()
+
+
+def create_character():
     try:
-        c1 = Character(100, 1, 0, 10)
-        c2 = Character(100, 1, 0, 10)
-        c3 = Character(80, 2, 50, 15, available=False)
-        print("Объекты созданы")
+        p1 = Character("Kai", 100, 0, 50, 55)
+        print(p1)
+        p2 = Character("Kai", 100, 0, 50, 55)
+        print(p2)
+        p3 = Character("Venom", 80, 2, 50, 77, available=False)
+        print(p3)
     except Exception as e:
         print("Ошибка создания:", e)
         return
 
-    print("\n--- Вывод персонажей ---")
-    print(c1)
-    print(c2)
-    print(c3)
+    return p1, p2, p3
 
 
-    print("\nСравнение")
-    print(f"c1 == c2: {c1 == c2}")
-    print(f"c1 == c3: {c1 == c3}")
+def battle(p1, p3):
+    lvl = p3.level
+    exp = p3.experience
 
-    print("\nАтрибут класса")
-    print(f"Всего создано персонажей: {Character.k_character}")
+    print(f"\n- Получение урона персонажем {p1.name} от персонажа {p3.name}")
+    print(f"{p1.name}: здоровье {p1.health} ->", end=" ")
+    p1.take_damage(p3.damage)
+    print(p1.health)
+    print(f"- Повышение показателей {p3.name}")
+    p3.gain_experience(p3.damage)
+    print(f"{p3.name}: уровень {lvl} -> {p3.level}, опыт {exp} -> {p3.experience}")
+    print("- Итог боя")
 
-    print("\nrepr")
-    print(repr(c1))
-
-    print("\nИзменение здоровья через сеттер")
-    print(f"Здоровье c1 до: {c1.health}")
-    c1.health = 80
-    print(f"После: {c1.health}")
-
-    print("\nПолучение урона")
-    c1.take_damage(30)
-    print(c1)
-
-    print("\nПолучение опыта")
-    c1.gain_experience(50)
-    print(c1)
-    c1.gain_experience(70)  # должно повысить уровень
-    print(c1)
+    print(p1)
+    print(p3)
 
 
-    print("\nДеактивация персонажа")
-    c3.deactivate()
-    print(c3)
+def reprr(p3):
+    print(repr(p3))
+
+
+def test_setter(p1):
+    print(f"Здоровье {p1.name} до изменения: {p1.health}")
     try:
-        c3.take_damage(10)
+        p1.health = 80
     except Exception as e:
-        print("Ошибка при попытке нанести урон:", e)
+        print(e)
+    print(f"После: {p1.health}")
 
-    print("\nАктивация персонажа")
-    c3.activate()
-    c3.take_damage(10)
-    print(c3)
 
-    print("\nПопытка создать персонажа с отрицательным здоровьем")
+def test_eq(p1, p2, p3):
+    print(f"p1 == p2: {p1 == p2}")
+    print(f"p1 == p3: {p1 == p3}")
+
+
+def change_available(p3):
+    print(p3.available, "->", end=" ")
+    p3.available = True
+    print(p3.available)
+
+
+def bad_character():
     try:
-        c_bad = Character(-5, 1, 0, 10)
-    except ValueError as e:
-        print("Ошибка:", e)
+        p4 = Character("Bad", -30, 5, 60, 20)
+    except Exception as e:
+        print("Ошибка создания:", e)
 
-if __name__ == "__main__":
-    main()
+
+main()
