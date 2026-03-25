@@ -70,8 +70,8 @@ def test_setter(p1):
 
 
 def test_eq(p1, p4, p3):
-    print(f"p1 == p4: {p1 == p4}")
-    print(f"p1 == p3: {p1 == p3}")
+    print(f"{p1.name} == {p4.name}: {p1 == p4}")
+    print(f"{p1.name} == {p3.name}: {p1 == p3}")
 
 
 def change_available(p2, p3):
