@@ -1,28 +1,28 @@
-def _validate_name(self, value):
+def validate_name(value):
     if not isinstance(value, str) or len(value) < 1:
         raise ValueError("Имя должно быть не пустым и строковым значением")
 
 
-def _validate_health(self, value):
+def validate_health(value):
     if not isinstance(value, int) or value < 0:
         raise ValueError("Здоровье должно быть целым неотрицательным числом")
 
 
-def _validate_level(self, value):
+def validate_level(value):
     if not isinstance(value, int) or value < 0:
         raise ValueError("Уровень должно быть целым неотрицательным числом")
 
 
-def _validate_experience(self, value):
+def validate_experience(value):
     if not isinstance(value, int) or value < 0:
         raise ValueError("Опыт должен быть целым неотрицательным числом")
 
 
-def _validate_damage(self, value):
+def validate_damage(value):
     if not isinstance(value, int) or value < 0:
         raise ValueError("Урон должен быть целым неотрицательным числом")
 
 
-def _validate_available(self, value):
+def validate_available(value):
     if not isinstance(value, bool):
         raise ValueError("Доступность должна быть True или False")

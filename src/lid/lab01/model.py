@@ -1,11 +1,21 @@
+from validate import (
+    validate_name,
+    validate_health,
+    validate_level,
+    validate_experience,
+    validate_damage,
+    validate_available,
+)
+
+
 class Character:
     def __init__(self, name, health, level, experience, damage, available=True):
-        self._validate_name(name)
-        self._validate_health(health)
-        self._validate_level(level)
-        self._validate_experience(experience)
-        self._validate_damage(damage)
-        self._validate_available(available)
+        validate_name(name)
+        validate_health(health)
+        validate_level(level)
+        validate_experience(experience)
+        validate_damage(damage)
+        validate_available(available)
 
         self._name = name
         self._health = health
@@ -40,69 +50,55 @@ class Character:
 
     @name.setter
     def name(self, value):
-        self._validate_name(value)
+        validate_name(value)
         self._name = value
 
     @health.setter
     def health(self, value):
-        self._validate_health(value)
+        validate_health(value)
         self._health = value
 
     @level.setter
     def level(self, value):
-        self._validate_level(value)
+        validate_level(value)
         self._level = value
 
     @experience.setter
     def experience(self, value):
-        self._validate_experience(value)
+        validate_experience(value)
         self._experience = value
 
     @damage.setter
     def damage(self, value):
-        self._validate_damage(value)
+        validate_damage(value)
         self._damage = value
 
     @available.setter
     def available(self, value):
-        self._validate_available(value)
+        validate_available(value)
         self._available = value
 
-    def _validate_name(self, value):
-        if not isinstance(value, str) or len(value) < 1:
-            raise ValueError("Имя должно быть не пустым и строковым значением")
-
-    def _validate_health(self, value):
-        if not isinstance(value, int) or value < 0:
-            raise ValueError("Здоровье должно быть целым неотрицательным числом")
-
-    def _validate_level(self, value):
-        if not isinstance(value, int) or value < 0:
-            raise ValueError("Уровень должно быть целым неотрицательным числом")
-
-    def _validate_experience(self, value):
-        if not isinstance(value, int) or value < 0:
-            raise ValueError("Опыт должен быть целым неотрицательным числом")
-
-    def _validate_damage(self, value):
-        if not isinstance(value, int) or value < 0:
-            raise ValueError("Урон должен быть целым неотрицательным числом")
-
-    def _validate_available(self, value):
-        if not isinstance(value, bool):
-            raise ValueError("Доступность должна быть True или False")
-
     def take_damage(self, summ):  # получение урона
+        if not self._available:
+            raise ValueError(f"Персонаж {self._name} деактивирован")
         self._health -= abs(summ)
         if self._health <= 0:  # если здоровье отрицательное то персонаж деактивируется
             self._health = 0
-            self._available = False
+            self.deactivate()
 
     def gain_experience(self, summ):  # получение опыта и нанесение урона
+        if not self._available:
+            raise ValueError(f"Персонаж {self._name} деактивирован")
         self._experience += summ
         if self._experience >= 100:  # получение опыта и повышение уровня
             self._level += self._experience // 100
             self._experience %= 100
+
+    def activate(self):
+        self._available = True
+
+    def deactivate(self):
+        self._available = False
 
     def __str__(self):
         status = "доступен" if self._available else "недоступен"
