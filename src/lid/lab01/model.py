@@ -78,19 +78,19 @@ class Character:
         validate_available(value)
         self._available = value
 
-    def take_damage(self, summ):  # получение урона
+    def take_damage(self, summ):
         if not self._available:
             raise ValueError(f"Персонаж {self._name} деактивирован")
         self._health -= abs(summ)
-        if self._health <= 0:  # если здоровье отрицательное то персонаж деактивируется
+        if self._health <= 0:
             self._health = 0
             self.deactivate()
 
-    def gain_experience(self, summ):  # получение опыта и нанесение урона
+    def gain_experience(self, summ):
         if not self._available:
             raise ValueError(f"Персонаж {self._name} деактивирован")
         self._experience += summ
-        if self._experience >= 100:  # получение опыта и повышение уровня
+        if self._experience >= 100:
             self._level += self._experience // 100
             self._experience %= 100
 
