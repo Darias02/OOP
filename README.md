@@ -120,7 +120,7 @@ def validate_health(value):
 * работу конструктора
 
 Вывод в терминале:
-![](src/images/lab01/1.png)
+![](src/images/lab01/1.png =400x300)
 ---
 
 ## Сценарий 2 — Вывод (**str** и **repr**)
