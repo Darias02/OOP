@@ -1,4 +1,4 @@
-from lib.lab01.validate import (
+from validate import (
     validate_name,
     validate_health,
     validate_level,
