@@ -27,7 +27,7 @@ class CharacterCollection:
 
     def remove(self, item):
         if item not in self._items:
-            raise ValueError('Элемент не найден')
+            raise ValueError("Элемент не найден")
         self._items.remove(item)
 
     def get_all(self):
@@ -39,8 +39,28 @@ class CharacterCollection:
     def find_by_name(self, search):
         for character in self._items:
             if character.name == search:
-                return(character)
+                return character
         return None
+
+    def remove_at(self, index):
+        return self._items.pop(index)
+
+    def sort(self, key):
+        self._items.sort(key=key)
+
+    def get_active(self):
+        collection_2 = CharacterCollection()
+        for i in self._items:
+            if i.available:
+                collection_2.add(i)
+        return collection_2
+
+    def more_health(self, min_health):
+        collection_m_h = CharacterCollection()
+        for i in self._items:
+            if i.health > min_health:
+                collection_m_h.add(i)
+        return collection_m_h
 
     def __len__(self):
         return len(self._items)
@@ -54,22 +74,3 @@ class CharacterCollection:
         if index < 0 or index >= len(self._items):
             raise IndexError(f"Индекс {index} вне диапазона (0-{len(self._items)-1})")
         return self._items[index]
-
-    def remove_at(self, index):
-        return self._items.pop(index)
-    
-    def sort(self, key):
-        self._items.sort(key=key)
-
-    def get_active(self):
-        collection_2 = CharacterCollection()
-        for i in self._items:
-            if i.available:
-                collection_2.add(i)
-        return collection_2
-    def more_health(self, min_health):
-        collection_m_h = CharacterCollection()
-        for i in self._items:
-            if i.health > min_health:
-                collection_m_h.add(i)
-        return collection_m_h

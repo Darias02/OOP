@@ -1,6 +1,7 @@
 from collection import CharacterCollection
 from model import Character
 
+
 def create_characters():
     c1 = Character("Alice", 100, 3, 50, 20, True)
     c2 = Character("Bob", 80, 1, 10, 10, True)
@@ -12,7 +13,6 @@ def create_characters():
 def main():
     print(f"{paint()}\nДобавление и вывод\n{paint()}")
     collection = CharacterCollection()
-
 
     c1, c2, c3, c4 = create_characters()
 
@@ -68,16 +68,18 @@ def main():
     print(f"\n{paint()}\nПроверка дубликатов\n{paint()}")
     try:
         collection.add(Character("Alice", 50, 1, 0, 5))
-        print('Персонаж добавлен')
+        print("Персонаж добавлен")
     except ValueError as e:
         print("Ошибка:", e)
     try:
         collection.add(Character("Alice", 50, 1, 0, 5))
-        print('Персонаж добавлен')
+        print("Персонаж добавлен")
     except ValueError as e:
         print("Ошибка:", e)
 
+
 def paint():
     return "-" * 87
+
 
 main()
