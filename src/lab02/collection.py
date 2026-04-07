@@ -31,7 +31,7 @@ class CharacterCollection:
         self._items.remove(item)
 
     def get_all(self):
-        return self._items.copy
+        return self._items.copy()
 
     def find_by_level(self, search):
         return [character for character in self._items if character.level == search]
