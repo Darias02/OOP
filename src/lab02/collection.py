@@ -61,6 +61,8 @@ class CharacterCollection:
 
     def more_health(self, min_health):
         collection_m_h = CharacterCollection()
+        if not isinstance(min_health, int):
+            raise TypeError('Здоровье должно быть целым числом')
         for i in self._items:
             if i.health > min_health:
                 collection_m_h.add(i)
