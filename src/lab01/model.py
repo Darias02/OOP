@@ -20,15 +20,15 @@ class Character:
         self._name = name
         self._health = health
         self._level = level
-        self._experience = experience  
-        self._damage = damage  
+        self._experience = experience
+        self._damage = damage
         self._available = available
 
     @property
     def name(self):
         return self._name
 
-    @property 
+    @property
     def health(self):
         return self._health
 
