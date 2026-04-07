@@ -43,6 +43,10 @@ class CharacterCollection:
         return None
 
     def remove_at(self, index):
+        if not isinstance(index, int):
+            raise TypeError("Индекс должен быть целым числом")
+        if index < 0 or index >= len(self._items):
+            raise IndexError(f"Индекс {index} вне диапазона (0-{len(self._items)-1})")
         return self._items.pop(index)
 
     def sort(self, key):
