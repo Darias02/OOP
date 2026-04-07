@@ -129,7 +129,7 @@ collection.sort(key=lambda x: x.level)
 * работу итерации
 
 Вывод в терминале:
-![](src/images/lab02/1.png)
+![](../images/lab02/1.png)
 ---
 
 ### 2 — Поиск, длина, индексация
@@ -146,7 +146,7 @@ collection.sort(key=lambda x: x.level)
 * поиск по атрибутам
 
 Вывод в терминале:
-![](src/images/lab02/2.png)
+![](../images/lab02/2.png)
 ---
 
 ### 3 — Удаление
@@ -162,7 +162,7 @@ collection.sort(key=lambda x: x.level)
 * обработку ошибок
 
 Вывод в терминале:
-![](src/images/lab02/3.png)
+![](../images/lab02/3.png)
 ---
 
 ### 4 — Сортировка
@@ -176,7 +176,7 @@ collection.sort(key=lambda x: x.level)
 
 
 Вывод в терминале:
-![](src/images/lab02/4.png)
+![](../images/lab02/4.png)
 ---
 
 ### 5 — Фильтрация
@@ -192,7 +192,7 @@ collection.sort(key=lambda x: x.level)
 * возврат новой коллекции
 
 Вывод в терминале:
-![](src/images/lab02/5.png)
+![](../images/lab02/5.png)
 ---
 
 ### 6 — Проверка ограничений
@@ -206,7 +206,7 @@ collection.sort(key=lambda x: x.level)
 
 
 Вывод в терминале:
-![](src/images/lab02/6.png)
+![](../images/lab02/6.png)
 ---
 
 ## Заключение
