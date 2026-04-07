@@ -1,6 +1,5 @@
 import sys, os
 
-# from model import Character
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from lab01.validate import (
     validate_available,
