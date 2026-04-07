@@ -2,14 +2,6 @@ import sys, os
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from model import Character
-from lab01.validate import (
-    validate_available,
-    validate_damage,
-    validate_experience,
-    validate_health,
-    validate_level,
-    validate_name,
-)
 
 
 class CharacterCollection:
@@ -62,7 +54,7 @@ class CharacterCollection:
     def more_health(self, min_health):
         collection_m_h = CharacterCollection()
         if not isinstance(min_health, int):
-            raise TypeError('Здоровье должно быть целым числом')
+            raise TypeError("Здоровье должно быть целым числом")
         for i in self._items:
             if i.health > min_health:
                 collection_m_h.add(i)
