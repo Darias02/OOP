@@ -49,10 +49,8 @@ def validate_kf_damage(kf_damage):
         raise TypeError("Коэффициент урона должен быть числом")
     if kf_damage <= 0:
         raise ValueError("Коэффициент урона должен быть больше 0")
-    return kf_damage
 
 
 def validate_block(block):
     if not isinstance(block, bool):
         raise TypeError("block должен быть bool")
-    return block

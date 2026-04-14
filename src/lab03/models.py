@@ -1,11 +1,10 @@
-from base import Character
 import sys, os
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from lab03.base import Character
 from lib.validate import (
     validate_kf_damage,
-    validate_available,
+    validate_block,
     validate_heal,
     validate_health_box,
 )
@@ -23,9 +22,11 @@ class Character_Boss(Character):
         block=False,
         available=True,
     ):
+        validate_kf_damage(kf_damage)
+        validate_block(block)
         super().__init__(name, health, level, experience, damage, available)
-        self._block = validate_available(block)
-        self._kf_damage = validate_kf_damage(kf_damage)
+        self._block = block
+        self._kf_damage = kf_damage
 
     @property
     def kf_damage(self):
@@ -74,9 +75,11 @@ class Character_Healer(Character):
     def __init__(
         self, name, health, level, experience, damage, heal, health_box, available=True
     ):
+        validate_heal(heal)
+        validate_health_box(health_box)
         super().__init__(name, health, level, experience, damage, available)
-        self.heal = validate_heal(heal)
-        self.health_box = validate_health_box(health_box)
+        self.heal = heal
+        self.health_box = health_box
 
     @property
     def heal(self):

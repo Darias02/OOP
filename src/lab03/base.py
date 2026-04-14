@@ -105,14 +105,14 @@ class Character:
         self._available = False
 
     def process(self, target):
-        return self.take_damage(self.damage)
+        return target.take_damage(self.damage)
 
     def __str__(self):
         status = "доступен" if self._available else "недоступен"
         return f"Персонаж {self._name}: здоровье {self._health}, уровень {self._level}, опыт {self._experience}, урон {self._damage}, статус: {status}"
 
     def __repr__(self):
-        return f"Character(name ={self._name}, health={self._health}, level={self._level}, experience={self._experience}, damage={self._damage}, available={self._available})"
+        return f"Character(name={self._name}, health={self._health}, level={self._level}, experience={self._experience}, damage={self._damage}, available={self._available})"
 
     def __eq__(self, objectt):
         if not isinstance(objectt, Character):
