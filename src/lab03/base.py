@@ -1,10 +1,13 @@
-from .validate import (
-    validate_name,
+import sys, os
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from lib.validate import (
+    validate_available,
+    validate_damage,
+    validate_experience,
     validate_health,
     validate_level,
-    validate_experience,
-    validate_damage,
-    validate_available,
+    validate_name,
 )
 
 
@@ -85,6 +88,7 @@ class Character:
         if self._health <= 0:
             self._health = 0
             self.deactivate()
+        return f"{self._name} получил {summ} урона, осталось {self._health} здоровья"
 
     def gain_experience(self, summ):
         if not self._available:
@@ -99,6 +103,9 @@ class Character:
 
     def deactivate(self):
         self._available = False
+
+    def process(self, target):
+        return self.take_damage(self.damage)
 
     def __str__(self):
         status = "доступен" if self._available else "недоступен"
