@@ -1,6 +1,7 @@
 import sys, os
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from lab04.interfaces import Action, SpecialAction
 from lab03.base import Character
 from lab03.models import Character_Boss, Character_Healer
 
@@ -82,3 +83,17 @@ class CharacterCollection:
         if index < 0 or index >= len(self._items):
             raise IndexError(f"Индекс {index} вне диапазона (0-{len(self._items)-1})")
         return self._items[index]
+
+    def get_actions(self):
+        return [item for item in self._items if isinstance(item, Action)]
+
+    def get_special_actions(self):
+        return [item for item in self._items if isinstance(item, SpecialAction)]
+    
+    def run_actions(self, target):
+        for item in self.get_actions():
+            item.process(target)
+
+    def run_special_actions(self, target):
+        for item in self.get_special_actions():
+            item.special_process(target)
