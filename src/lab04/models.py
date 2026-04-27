@@ -1,7 +1,8 @@
 import sys, os
 from interfaces import SpecialAction
+
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from lab03.base import Character
+from base import Character
 from lib.validate import (
     validate_kf_damage,
     validate_block,
@@ -60,10 +61,10 @@ class Character_Boss(Character, SpecialAction):
         new_damage = int(self.damage * self._kf_damage)
         target.take_damage(new_damage)
         return f"{self.name} в ярости и ударил {target.name} с силой {new_damage}!"
-    
+
     def special_process(self, target):
         return self.ultra_attack(target)
-    
+
     def __str__(self):
         if self._block:
             block = "активирован"
@@ -108,12 +109,10 @@ class Character_Healer(Character, SpecialAction):
         target.health += self.heal
         self.health_box -= self.heal
         return f"герой {self.name} поделился аптечкой с {target.name} и восстановил {self.heal} здоровья"
-    
-    
+
     def special_process(self, target):
         return self.healing_character(target)
-        
-    
+
     def __str__(self):
         return (
             super().__str__()
