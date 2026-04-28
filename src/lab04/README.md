@@ -198,7 +198,10 @@ special_process()
 
 ### 5 — isinstance
 Используется:
+
+```python
 isinstance(obj, Action)
+```
 Демонстрирует:
 
 
@@ -214,7 +217,10 @@ isinstance(obj, Action)
 
 ### 6 — Printable (универсальный вывод)
 Используется функция:
+```python
 print_all(items: list[Printable])
+```
+
 Демонстрирует:
 
 
@@ -234,7 +240,6 @@ print_all(items: list[Printable])
 
 
 босс использует усиленную атаку
-
 
 хилер лечит персонажа
 
