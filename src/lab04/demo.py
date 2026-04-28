@@ -1,4 +1,4 @@
-'''# import sys, os
+"""# import sys, os
 
 # sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from base import Character
@@ -98,11 +98,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-'''
-
-
-
-
+"""
 
 from base import Character
 from models import Character_Boss, Character_Healer
@@ -111,27 +107,27 @@ from collection import CharacterCollection
 
 
 def print_all(items: list[Printable]):
-    print("\n=== PRINTABLE (универсальный вывод) ===")
+    print(f"\n{paint()}\n PRINTABLE (универсальный вывод) \n{paint()}")
     for item in items:
         print(item.to_string())
 
 
 def scenario_actions(collection: CharacterCollection, target: Character):
-    print("\n=== СЦЕНАРИЙ 1: ACTION ===")
+    print(f"\n{paint()}\n СЦЕНАРИЙ 1: ACTION \n{paint()}")
     results = collection.run_actions(target)
     for res in results:
         print(res)
 
 
 def scenario_special(collection: CharacterCollection, target: Character):
-    print("\n=== СЦЕНАРИЙ 2: SPECIAL ACTION ===")
+    print(f"\n{paint()}\n СЦЕНАРИЙ 2: SPECIAL ACTION \n{paint()}")
     results = collection.run_special_actions(target)
     for res in results:
         print(res)
 
 
 def scenario_filters(collection: CharacterCollection):
-    print("\n=== СЦЕНАРИЙ 3: ФИЛЬТРАЦИЯ ===")
+    print(f"\n{paint()}\n СЦЕНАРИЙ 3: ФИЛЬТРАЦИЯ \n{paint()}")
 
     actions = collection.get_actions()
     specials = collection.get_special_actions()
@@ -146,7 +142,7 @@ def scenario_filters(collection: CharacterCollection):
 
 
 def scenario_isinstance(collection: CharacterCollection):
-    print("\n=== СЦЕНАРИЙ 4: isinstance ===")
+    print(f"\n{paint()}\n СЦЕНАРИЙ 4: isinstance \n{paint()}")
 
     for obj in collection:
         print(
@@ -158,7 +154,7 @@ def scenario_isinstance(collection: CharacterCollection):
 
 
 def scenario_real(hero, boss, healer):
-    print("\n=== СЦЕНАРИЙ 5: РЕАЛЬНОЕ ПОВЕДЕНИЕ ===")
+    print(f"\n{paint()}\n СЦЕНАРИЙ 5: РЕАЛЬНОЕ ПОВЕДЕНИЕ \n{paint()}")
 
     print(boss.activate_block())
     print(boss.special_process(hero))
@@ -197,7 +193,7 @@ def main():
     collection.add(boss)
     collection.add(healer)
 
-    print("\n=== ВСЯ КОЛЛЕКЦИЯ ===")
+    print(f"\n{paint()}\n ВСЯ КОЛЛЕКЦИЯ \n{paint()}")
     for item in collection:
         print(item)
 
@@ -210,6 +206,10 @@ def main():
     print_all(collection.get_all())
 
     scenario_real(hero, boss, healer)
+
+
+def paint():
+    return "-" * 87
 
 
 if __name__ == "__main__":

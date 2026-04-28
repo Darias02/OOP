@@ -89,7 +89,7 @@ class CharacterCollection:
 
     def get_special_actions(self):
         return [item for item in self._items if isinstance(item, SpecialAction)]
-    
+
     def run_actions(self, target):
         for item in self.get_actions():
             item.process(target)

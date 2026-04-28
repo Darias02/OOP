@@ -12,6 +12,7 @@ class SpecialAction(ABC):  # спецавльное действие
     def special_process(self, target):
         pass
 
+
 class Printable(ABC):
     @abstractmethod
     def to_string(self):

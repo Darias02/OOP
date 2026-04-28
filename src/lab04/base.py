@@ -111,7 +111,7 @@ class Character(Action, Printable):
         result = target.take_damage(self.damage)  # цель теряет здоровье
         self.gain_experience(self.damage)  # атакующий получает опыт
         return result
-    
+
     def to_string(self):
         return str(self)
 
@@ -122,7 +122,6 @@ class Character(Action, Printable):
     def __repr__(self):
         return f"Character(name={self._name}, health={self._health}, level={self._level}, experience={self._experience}, damage={self._damage}, available={self._available})"
 
-    
     def __eq__(self, objectt):
         if not isinstance(objectt, Character):
             return False

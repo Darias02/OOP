@@ -1,6 +1,3 @@
-import sys, os
-
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from interfaces import Action, SpecialAction, Printable
 from base import Character
 from models import Character_Boss, Character_Healer

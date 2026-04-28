@@ -12,6 +12,7 @@ from lib.validate import (
 )
 from lab04.interfaces import Action
 
+
 class Character(Action):
     def __init__(self, name, health, level, experience, damage, available=True):
         validate_name(name)
@@ -92,7 +93,7 @@ class Character(Action):
             self.deactivate()
         return f"{self._name} получил {summ} урона, осталось {self._health} здоровья"
 
-    def gain_experience(self, summ): #повышение уровня
+    def gain_experience(self, summ):  # повышение уровня
         if not self._available:
             raise ValueError(f"Персонаж {self._name} деактивирован")
         self._experience += summ
@@ -107,11 +108,9 @@ class Character(Action):
         self._available = False
 
     def process(self, target):
-        result = target.take_damage(self.damage) #цель теряет здоровье
-        self.gain_experience(self.damage) #атакующий получает опыт
+        result = target.take_damage(self.damage)  # цель теряет здоровье
+        self.gain_experience(self.damage)  # атакующий получает опыт
         return result
-    
-
 
     def __str__(self):
         status = "доступен" if self._available else "недоступен"
@@ -130,4 +129,3 @@ class Character(Action):
             and self._damage == objectt._damage
             and self._available == objectt._available
         )
-
