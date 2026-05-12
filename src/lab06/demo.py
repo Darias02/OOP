@@ -11,7 +11,6 @@ def print_section(title: str):
     print(f"\n{paint()}\n {title} \n{paint()}")
 
 
-
 def scenario_find(collection: TypedCollection[Character]):
     print_section("Find")
 
@@ -22,7 +21,6 @@ def scenario_find(collection: TypedCollection[Character]):
     print("Не найдено:", result2)
 
 
-
 def scenario_filter(collection: TypedCollection[Character]):
     print_section("Filter")
 
@@ -30,6 +28,7 @@ def scenario_filter(collection: TypedCollection[Character]):
 
     for item in filtered:
         print(item)
+
 
 def scenario_map(collection: TypedCollection[Character]):
     print_section("Map")
@@ -49,13 +48,11 @@ def scenario_displayable(collection: TypedCollection[Displayable]):
         print(i)
 
 
-
 def scenario_scorable(collection: TypedCollection[Scorable]):
     print_section("Scorable")
 
     scores = collection.map(lambda x: x.score())
     print("Scores:", scores)
-
 
 
 def main():

@@ -1,24 +1,25 @@
 from typing import TypeVar, Generic, Callable, Optional, Protocol
-        
+
+
 class Displayable(Protocol):
-    def display(self) -> str:
-        ...
+    def display(self) -> str: ...
 class Scorable(Protocol):
-    def score(self) -> float:
-        ...
+    def score(self) -> float: ...
+
 
 T = TypeVar("T")
 R = TypeVar("R")
 D = TypeVar("D", bound=Displayable)
 S = TypeVar("S", bound=Scorable)
 
+
 class TypedCollection(Generic[T]):
     def __init__(self) -> None:
         self._items: list[T] = []
-    
+
     def add(self, item: T) -> None:
         self._items.append(item)
-    
+
     def remove(self, item: T) -> None:
         self._items.remove(item)
 
@@ -30,6 +31,7 @@ class TypedCollection(Generic[T]):
             if predicate(item):
                 return item
         return None
+
     def filter(self, predicate: Callable[[T], bool]) -> list[T]:
         return [item for item in self._items if predicate(item)]
 
@@ -39,4 +41,3 @@ class TypedCollection(Generic[T]):
 
 class Protocol:
     pass
-

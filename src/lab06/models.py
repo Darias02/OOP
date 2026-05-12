@@ -1,7 +1,6 @@
 import sys, os
 from lab05.interfaces import SpecialAction
 
-# sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from base import Character
 from lib.validate import (
     validate_kf_damage,
@@ -20,8 +19,8 @@ class Character_Boss(Character, SpecialAction):
         experience: int,
         damage: int,
         kf_damage: float,
-        block: bool = False,  # ДОБАВИЛИ bool
-        available: bool = True,  # ДОБАВИЛИ bool
+        block: bool = False,
+        available: bool = True,
     ) -> None:
         validate_kf_damage(kf_damage)
         validate_block(block)
@@ -48,13 +47,12 @@ class Character_Boss(Character, SpecialAction):
 
     @kf_damage.setter
     def kf_damage(self, value: float) -> None:
-        # setter ничего не возвращает
+
         self._kf_damage = validate_kf_damage(value)
 
     def activate_block(self) -> str:
         self._block = True
 
-        # функция возвращает строку
         return f"{self.name} активировал щит"
 
     def deactivate_block(self) -> str:
@@ -76,10 +74,7 @@ class Character_Boss(Character, SpecialAction):
 
         target.take_damage(new_damage)
 
-        return (
-            f"{self.name} в ярости и ударил "
-            f"{target.name} с силой {new_damage}!"
-        )
+        return f"{self.name} в ярости и ударил " f"{target.name} с силой {new_damage}!"
 
     def special_process(self, target: Character) -> str:
         return self.ultra_attack(target)
@@ -144,14 +139,10 @@ class Character_Healer(Character, SpecialAction):
             raise TypeError("Можно лечить только героев")
 
         if not target.available:
-            raise ValueError(
-                f"{target.name} не активен и не может быть вылечен"
-            )
+            raise ValueError(f"{target.name} не активен и не может быть вылечен")
 
         if self.health_box < self.heal:
-            raise ValueError(
-                f"у {self.name} не хватает ресурсов аптечки"
-            )
+            raise ValueError(f"у {self.name} не хватает ресурсов аптечки")
 
         target.health += self.heal
         self.health_box -= self.heal
@@ -166,7 +157,7 @@ class Character_Healer(Character, SpecialAction):
 
     def score(self) -> float:
         return float(self.heal)
-        
+
     def __str__(self) -> str:
         return (
             super().__str__()
