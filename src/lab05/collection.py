@@ -104,6 +104,7 @@ class CharacterCollection:
     def apply(self, func):
         self._items = list(map(func, self._items))
         return self
+
+
 def get_printable(self):
     return [item for item in self._items if isinstance(item, Printable)]
-

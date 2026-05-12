@@ -93,7 +93,7 @@ class Character(Action, Printable):
             self.deactivate()
         return f"{self._name} получил {summ} урона, осталось {self._health} здоровья"
 
-    def gain_experience(self, summ):  # повышение уровня
+    def gain_experience(self, summ):
         if not self._available:
             raise ValueError(f"Персонаж {self._name} деактивирован")
         self._experience += summ
@@ -108,8 +108,8 @@ class Character(Action, Printable):
         self._available = False
 
     def process(self, target):
-        result = target.take_damage(self.damage)  # цель теряет здоровье
-        self.gain_experience(self.damage)  # атакующий получает опыт
+        result = target.take_damage(self.damage)
+        self.gain_experience(self.damage)
         return result
 
     def to_string(self):

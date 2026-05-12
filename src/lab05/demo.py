@@ -24,7 +24,6 @@ def print_collection(title, collection):
 def main():
     collection = CharacterCollection()
 
-    # создаём персонажей
     c1 = Character("Alice", 100, 3, 50, 10)
     c2 = Character("Bob", 150, 6, 20, 15)
     c3 = Character_Boss("Dragon", 300, 10, 0, 30, 2)
@@ -67,8 +66,10 @@ def main():
 
     print_collection("Здоровье >= 150", collection)
 
+
 def paint():
     return "-" * 87
+
 
 if __name__ == "__main__":
     main()
