@@ -38,6 +38,3 @@ class TypedCollection(Generic[T]):
     def map(self, transform: Callable[[T], R]) -> list[R]:
         return [transform(item) for item in self._items]
 
-
-class Protocol:
-    pass
