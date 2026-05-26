@@ -1,7 +1,7 @@
 import sys, os
 
 
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+'''sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from lib.validate import (
     validate_available,
     validate_damage,
@@ -11,7 +11,9 @@ from lib.validate import (
     validate_name,
 )
 from lab05.interfaces import Action, Printable
-
+'''
+from src.lib.validate import validate_available, validate_damage, validate_experience, validate_health, validate_level, validate_name
+from src.lab05.interfaces import Action, Printable
 
 class Character(Action, Printable):
     def __init__(
