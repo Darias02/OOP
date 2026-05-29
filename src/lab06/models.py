@@ -1,14 +1,16 @@
 import sys, os
-from lab05.interfaces import SpecialAction
+#from lab05.interfaces import SpecialAction
 
-from base import Character
-from lib.validate import (
-    validate_kf_damage,
-    validate_block,
-    validate_heal,
-    validate_health_box,
-)
-
+#from base import Character
+#from lib.validate import (
+#    validate_kf_damage,
+#   validate_block,
+#  validate_heal,
+#    validate_health_box,
+#)
+from src.lab05.interfaces import SpecialAction
+from src.lab06.base import Character
+from src.lib.validate import validate_kf_damage, validate_block, validate_heal, validate_health_box
 
 class Character_Boss(Character, SpecialAction):
     def __init__(
