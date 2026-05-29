@@ -50,11 +50,11 @@ class CLI:
                 "damage": int(input("Урон: "))
             }
             if t == '1':
-                p["kf_damage"] = float(input("kf_damage: ")) 
-                p["block"] = input("block (yes/no): ").lower() == 'yes' 
+                p["kf_damage"] = float(input("Коэффицент урона: ")) 
+                p["block"] = input("Блок (yes/no): ").lower() == 'yes' 
             elif t == '2':
-                p["heal"] = int(input("heal: ")) 
-                p["health_box"] = int(input("health_box: "))
+                p["heal"] = int(input("Сила лечения: ")) 
+                p["health_box"] = int(input("Кол-во аптечек: "))
             
             self.app.create_and_add(t, p)
             print("Успех!")
