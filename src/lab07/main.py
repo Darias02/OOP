@@ -11,13 +11,14 @@ DATA_FILE = os.path.join(os.path.dirname(__file__), 'data.json')
 
 def main() -> None:
     app = AppManager()
+    
     raw_data = load(DATA_FILE)
-    app.load_data(raw_data)
-    print(f"--- Загружено {len(app.get_all())} объектов из базы ---")
+    app.load_from_raw(raw_data)
     
     cli = CLI(app)
     cli.run()
-    save(app.get_raw_data(), DATA_FILE)
+    
+    save(app.get_save_data(), DATA_FILE)
 
 if __name__ == "__main__":
     main()

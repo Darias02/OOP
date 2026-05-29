@@ -1,56 +1,58 @@
-from typing import List, Optional, Callable, Any, Dict
+from typing import List, Optional, Any, Dict
 from src.lab07.exceptions import ItemNotFoundError, DuplicateItemError
-from src.lab06.base import Character
 from src.lab06.models import Character_Boss, Character_Healer
 
 class AppManager:
     def __init__(self) -> None:
-        self._collection: List[Character] = []
+        self._collection: List[Any] = []
 
-    def load_data(self, raw_data: List[Dict[str, Any]]) -> None:
-        self._collection.clear()
+    def create_and_add(self, char_type: str, p: Dict[str, Any]) -> None:
+        if self.find_by_name(p["name"]):
+            raise DuplicateItemError(f"Персонаж '{p['name']}' уже существует")
+
+        if char_type == '1':
+            new_char = Character_Boss(
+                name=p["name"], health=p["health"], level=p["level"],
+                experience=p["experience"], damage=p["damage"],
+                kf_damage=p["kf_damage"], block=p["block"]
+            )
+        elif char_type == '2':
+            new_char = Character_Healer(
+                name=p["name"], health=p["health"], level=p["level"],
+                experience=p["experience"], damage=p["damage"],
+                heal=p["heal"], health_box=p["health_box"]
+            )
+        else:
+            raise ValueError("Неверный тип персонажа.")
+        
+        self._collection.append(new_char)
+
+    def load_from_raw(self, raw_data: List[Dict[str, Any]]) -> None:
         for item in raw_data:
             try:
-                role = item.get("role")
-                if role == "Boss":
-                    obj = Character_Boss(
-                        name=item["name"], health=item["health"], level=item["level"],
-                        experience=item["experience"], damage=item["damage"],
-                        kf_damage=item["kf_damage"], block=item["block"], available=item["available"]
-                    )
-                    self._collection.append(obj)
-                elif role == "Healer":
-                    obj = Character_Healer(
-                        name=item["name"], health=item["health"], level=item["level"],
-                        experience=item["experience"], damage=item["damage"],
-                        heal=item["heal"], health_box=item["health_box"], available=item["available"]
-                    )
-                    self._collection.append(obj)
+                role_type = '1' if item.get("role") == "Boss" else '2'
+                self.create_and_add(role_type, item)
             except Exception:
-                pass 
-    def get_raw_data(self) -> List[Dict[str, Any]]:
-        data = []
+                continue
+
+    def get_save_data(self) -> List[Dict[str, Any]]:
+        result = []
         for item in self._collection:
-            base_info = {
+            d = {
                 "name": item.name, "health": item.health, "level": item.level,
                 "experience": item.experience, "damage": item.damage, "available": item.available
             }
             if isinstance(item, Character_Boss):
-                base_info.update({"role": "Boss", "kf_damage": item.kf_damage, "block": item.block})
-            elif isinstance(item, Character_Healer):
-                base_info.update({"role": "Healer", "heal": item.heal, "health_box": item.health_box})
-            data.append(base_info)
-        return data
+                d.update({"role": "Boss", "kf_damage": item.kf_damage, "block": item.block})
+            else:
+                d.update({"role": "Healer", "heal": item.heal, "health_box": item.health_box})
+            result.append(d)
+        return result
 
-    def add_item(self, item: Character) -> None:
-        if self.find_by_name(item.name):
-            raise DuplicateItemError(f"Персонаж с именем '{item.name}' уже существует.")
-        self._collection.append(item)
-
-    def get_all(self) -> List[Character]:
+    def get_all(self) -> List[Any]:
         return self._collection
 
-    def find_by_name(self, name: str) -> Optional[Character]:
+    def find_by_name(self, name: str) -> Optional[Any]:
         for item in self._collection:
             if item.name.lower() == name.lower():
                 return item
@@ -59,11 +61,11 @@ class AppManager:
     def delete_item(self, name: str) -> None:
         item = self.find_by_name(name)
         if not item:
-            raise ItemNotFoundError(f"Персонаж '{name}' не найден.")
+            raise ItemNotFoundError(f"Персонаж '{name}' не найден")
         self._collection.remove(item)
 
-    def filter_items(self, condition: Callable[[Character], bool]) -> List[Character]:
-        return [item for item in self._collection if condition(item)]
+    def filter_by_hp(self, min_hp: int) -> List[Any]:
+        return [item for item in self._collection if item.health >= min_hp]
 
-    def sort_items(self, key_func: Callable[[Character], Any], reverse: bool = False) -> None:
-        self._collection.sort(key=key_func, reverse=reverse)
+    def sort_by_strategy(self, attr: str) -> None:
+        self._collection.sort(key=lambda x: getattr(x, attr, ""), reverse=(attr != "name"))

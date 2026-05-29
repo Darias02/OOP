@@ -1,6 +1,5 @@
 from src.lab07.app import AppManager
 from src.lab07.exceptions import ItemNotFoundError, DuplicateItemError
-from src.lab06.models import Character_Boss, Character_Healer
 
 class CLI:
     
@@ -11,125 +10,93 @@ class CLI:
         while True:
             self._print_menu()
             try:
-                choice = int(input("Выберите пункт меню: "))
-                print("-" * 50)
-                if choice == 0:
-                    print("Сохранение данных и выход из программы...")
-                    break
+                choice = input("Выберите пункт: ").strip()
+                print("-" * 55)
+                if choice == '0': break
                 self._handle_choice(choice)
             except ValueError:
-                print("Ошибка: введите корректное число")
+                print("Ошибка: введите число")
             except Exception as e:
-                print(f"Непредвиденная ошибка: {e}")
-            print("-" * 50)
+                print(f"Ошибка: {e}")
+            print("-" * 55)
 
     def _print_menu(self) -> None:
-        print("\nГлавное меню:")
-        print("1. Добавить персонажа")
-        print("2. Показать всех персонажей")
-        print("3. Найти персонажа по имени")
+        print("\n1. Добавить персонажа")
+        print("2. Показать всех")
+        print("3. Найти по имени")
         print("4. Удалить персонажа")
-        print("5. Отфильтровать (по здоровью)")
-        print("6. Отсортировать коллекцию")
-        print("0. Выход")
+        print("5. Фильтр по HP")
+        print("6. Сортировка")
+        print("0. Выход и сохранение")
 
-    def _handle_choice(self, choice: int) -> None:
-        if choice == 1: self._action_add()
-        elif choice == 2: self._action_show_all()
-        elif choice == 3: self._action_find()
-        elif choice == 4: self._action_delete()
-        elif choice == 5: self._action_filter()
-        elif choice == 6: self._action_sort()
-        else: print("Неверный пункт меню")
+    def _handle_choice(self, choice: str) -> None:
+        if choice == '1': self._action_add()
+        elif choice == '2': self._action_show_all()
+        elif choice == '3': self._action_find()
+        elif choice == '4': self._action_delete()
+        elif choice == '5': self._action_filter()
+        elif choice == '6': self._action_sort()
+        else: print("Неверный пункт.")
 
     def _action_add(self) -> None:
-        print("Кого вы хотите добавить? (1 - Босс, 2 - Хилер)")
-        type_choice = input("Ваш выбор: ").strip()
-        
+        print("Тип: 1 - Boss, 2 - Healer")
+        t = input("Выбор: ").strip()
         try:
-            name = input("Имя: ")
-            health = int(input("Здоровье: "))
-            level = int(input("Уровень: "))
-            experience = int(input("Опыт: "))
-            damage = int(input("Урон: "))
+            p = {
+                "name": input("Имя: "),
+                "health": int(input("Здоровье: ")),
+                "level": int(input("Уровень: ")),
+                "experience": int(input("Опыт: ")),
+                "damage": int(input("Урон: "))
+            }
+            if t == '1':
+                p["kf_damage"] = float(input("kf_damage: ")) 
+                p["block"] = input("block (yes/no): ").lower() == 'yes' 
+            elif t == '2':
+                p["heal"] = int(input("heal: ")) 
+                p["health_box"] = int(input("health_box: "))
             
-            if type_choice == '1':
-                kf_damage = float(input("Коэффициент урона: "))
-                block_input = input("Есть блок? (yes/no): ").lower() == 'yes'
-                new_char = Character_Boss(name, health, level, experience, damage, kf_damage, block_input)
-            elif type_choice == '2':
-                heal = int(input("Сила лечения: "))
-                health_box = int(input("Кол-во аптечек: "))
-                new_char = Character_Healer(name, health, level, experience, damage, heal, health_box)
-            else:
-                print("Ошибка: Неверный тип.")
-                return
-
-            self.app.add_item(new_char)
-            print(f"Персонаж '{name}' успешно добавлен!")
-        except ValueError as e:
-            print(f"Ошибка ввода: {e}")
-        except TypeError as e:
-            print(f"Ошибка типа данных: {e}")
-        except DuplicateItemError as e:
-            print(f"Ошибка логики: {e}")
+            self.app.create_and_add(t, p)
+            print("Успех!")
+        except Exception as e:
+            print(f"Ошибка валидации: {e}")
 
     def _action_show_all(self, items=None) -> None:
-        target_items = items if items is not None else self.app.get_all()
-        if not target_items:
-            print("Коллекция пуста.")
+        target = items if items is not None else self.app.get_all()
+        if not target:
+            print("Пусто.")
             return
-        
-        print(f"{'Имя':<15} | {'Тип':<10} | {'Здоровье':<10} | {'Уровень':<8}")
-        print("-" * 50)
-        for item in target_items:
-            role = "Босс" if isinstance(item, Character_Boss) else "Хилер"
+        print(f"{'Имя':<15} | {'Тип':<10} | {'HP':<10} | {'Lvl':<8}")
+        print("-" * 55)
+        for item in target:
+            role = "Boss" if hasattr(item, 'kf_damage') else "Healer"
             print(f"{item.name:<15} | {role:<10} | {item.health:<10} | {item.level:<8}")
 
     def _action_find(self) -> None:
-        name = input("Введите имя для поиска: ").strip()
-        item = self.app.find_by_name(name)
-        if item:
-            print("\n--- Найден персонаж ---")
-            self._action_show_all([item])
-        else:
-            print("Персонаж не найден.")
+        name = input("Имя для поиска: ")
+        res = self.app.find_by_name(name)
+        if res: self._action_show_all([res])
+        else: print("Не найден.")
 
     def _action_delete(self) -> None:
-        name = input("Введите имя для удаления: ").strip()
-        confirm = input(f"Вы точно хотите удалить '{name}'? (yes/no): ").strip().lower()
-        if confirm == 'yes':
+        name = input("Имя для удаления: ")
+        if input(f"Удалить {name}? (yes/no): ").lower() == 'yes':
             try:
                 self.app.delete_item(name)
-                print("Успешно удалено.")
+                print("Удалено.")
             except ItemNotFoundError as e:
-                print(f"Ошибка: {e}")
-        else:
-            print("Удаление отменено.")
+                print(e)
 
     def _action_filter(self) -> None:
         try:
-            min_hp = int(input("Введите минимальное количество здоровья: "))
-            results = self.app.filter_items(lambda x: x.health >= min_hp)
-            print(f"Найдено {len(results)} персонажей:")
-            self._action_show_all(results)
-        except ValueError:
-            print("Ошибка: необходимо ввести число.")
+            hp = int(input("Мин. здоровье: "))
+            self._action_show_all(self.app.filter_by_hp(hp))
+        except ValueError: print("Ошибка ввода.")
 
     def _action_sort(self) -> None:
-        print("1. По имени")
-        print("2. По уровню")
-        print("3. По здоровью")
-        choice = input("Выберите стратегию: ").strip()
-        
-        if choice == '1':
-            self.app.sort_items(key_func=lambda x: x.name)
-        elif choice == '2':
-            self.app.sort_items(key_func=lambda x: x.level, reverse=True)
-        elif choice == '3':
-            self.app.sort_items(key_func=lambda x: x.health, reverse=True)
-        else:
-            print("Неверный выбор")
-            return
-        print("Коллекция успешно отсортирована.")
-        self._action_show_all()
+        print("1. По имени, 2. По уровню, 3. По HP")
+        m = {'1': 'name', '2': 'level', '3': 'health'}
+        c = input("Выбор: ")
+        if c in m:
+            self.app.sort_by_strategy(m[c])
+            self._action_show_all()
